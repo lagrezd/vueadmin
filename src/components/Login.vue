@@ -51,7 +51,7 @@
     methods: {
       signInWithPassword () {
         if (this.email.length > 0 && this.password.length > 0) {
-            this.$store.dispatch('signInWithPassword', this.credential)
+          this.$store.dispatch('signInWithPassword', this.credential)
         }
       },
       login () {

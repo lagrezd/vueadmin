@@ -1,49 +1,66 @@
-const LOGIN = 'LOGIN'
-const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
-const LOGOUT = 'LOGOUT'
-
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import Firebase from 'firebase'
+import { config } from './firebaseConfig'
+import * as types from './mutations'
+
+import login from './modules/login'
+
 Vue.use(Vuex)
+Firebase.initializeApp(config)
+
+let db = Firebase.database()
+let auth = Firebase.auth
 
 export const store = new Vuex.Store({
   state: {
-    isLoggedIn: localStorage.getItem('token')
+    db,
+    auth,
+    isLoggedIn: localStorage.getItem('token'),
+    userName: localStorage.getItem('username')
   },
   mutations: {
-    [LOGIN] (state) {
+    [types.LOGIN] (state) {
       state.pending = true
     },
-    [LOGIN_SUCCESS] (state) {
+    [types.LOGIN_SUCCESS] (state) {
       state.isLoggedIn = true
+      state.userName = localStorage.getItem('username')
       state.pending = false
     },
-    [LOGOUT] (state) {
+    [types.LOGOUT] (state) {
       state.isLoggedIn = false
     }
   },
   actions: {
     login ({ commit }, creds) {
       console.log('login...', creds)
-      commit(LOGIN) // show spinner
+      commit(types.LOGIN) // show spinner
       return new Promise(resolve => {
         setTimeout(() => {
           localStorage.setItem('token', 'JWT')
-          localStorage.setItem('name', creds)
-          commit(LOGIN_SUCCESS)
+          localStorage.setItem('username', creds.email)
+          commit(types.LOGIN_SUCCESS)
           resolve()
         }, 1000)
       })
     },
     logout ({ commit }) {
       localStorage.removeItem('token')
-      commit(LOGOUT)
+      localStorage.removeItem('username')
+      commit(types.LOGOUT)
     }
   },
   getters: {
     isLoggedIn: state => {
       return state.isLoggedIn
+    },
+    userName: state => {
+      return state.userName
     }
+  },
+  modules: {
+    login
   }
 })
