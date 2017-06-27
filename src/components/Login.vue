@@ -12,7 +12,7 @@
         <div class="section"></div>
         <main>
             <div class="col s12 z-depth-4 card-panel">
-                <form class="col s12 login-form" @submit.prevent="login({ email, password })">
+                <form class="col s12 login-form" @submit.prevent="signInWithPassword()">
                     <p class="center login-form-text">Vue Admin</p>
                     <div class='row'>
                         <div class='input-field col s12'>
@@ -53,7 +53,7 @@
         if (this.email.length > 0 && this.password.length > 0) {
           this.$store.dispatch('signInWithPassword', this.credential)
         }
-      },
+      }, /*
       login () {
         this.authenticating = true
         this.$store.dispatch('login', {
@@ -62,14 +62,24 @@
         }).then(() => {
           this.$router.push('/')
         })
-      },
+      }, */
       logout () {
         this.$store.dispatch('logout')
+      }
+    },
+    watch: {
+      'authorized': { // watch the notes array for changes
+        handler () {
+          if (this.authorized) this.$router.push('/')
+        }
       }
     },
     computed: {
       credential () {
         return {email: this.email, password: this.password}
+      },
+      authorized () {
+        return this.$store.getters.getAuth
       },
       isLoggedIn () {
         return this.$store.getters.isLoggedIn

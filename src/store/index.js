@@ -6,6 +6,7 @@ import { config } from './firebaseConfig'
 import * as types from './mutations'
 
 import login from './modules/login'
+// import Auth from './modules/auth'
 
 Vue.use(Vuex)
 Firebase.initializeApp(config)
@@ -17,8 +18,7 @@ export const store = new Vuex.Store({
   state: {
     db,
     auth,
-    isLoggedIn: localStorage.getItem('token'),
-    userName: localStorage.getItem('username')
+    isLoggedIn: localStorage.getItem('token')
   },
   mutations: {
     [types.LOGIN] (state) {
@@ -26,7 +26,7 @@ export const store = new Vuex.Store({
     },
     [types.LOGIN_SUCCESS] (state) {
       state.isLoggedIn = true
-      state.userName = localStorage.getItem('username')
+      state.user = localStorage.getItem('username')
       state.pending = false
     },
     [types.LOGOUT] (state) {
@@ -40,7 +40,7 @@ export const store = new Vuex.Store({
       return new Promise(resolve => {
         setTimeout(() => {
           localStorage.setItem('token', 'JWT')
-          localStorage.setItem('username', creds.email)
+          localStorage.setItem('user', auth)
           commit(types.LOGIN_SUCCESS)
           resolve()
         }, 1000)

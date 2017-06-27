@@ -8,7 +8,8 @@ import { store } from './store'
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.Auth && !store.state.isLoggedIn) {
+  if (to.meta.authRequired && !store.getters.getAuth) {
+    console.log(to.meta.Auth)
     console.log(to.meta.Auth)
     next({ path: '/login' })
   } else {

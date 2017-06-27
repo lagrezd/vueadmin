@@ -55,7 +55,6 @@
 
 <script>
   export default {
-    name: 'hello',
     data () {
       return {
       }
@@ -72,6 +71,9 @@
       },
       userName () {
         return this.$store.getters.userName
+      },
+      authorized () {
+        return this.$store.getters.getAuth
       }
     }
   }

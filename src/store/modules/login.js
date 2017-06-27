@@ -26,14 +26,15 @@ const actions = {
       .catch((error) => {
         console.log(error)
         // let alert = errorAlert(error, 'Impossible to sign in', 'error')
-        dispatch('sendAlert', alert, { root: true })
+        // dispatch('sendAlert', alert, { root: true })
       })
   },
   signIn ({ commit, state, dispatch, rootState }, user) {
     commit(types.SET_USER, user)
-    dispatch('sendAlert', alert, { root: true })
-    dispatch('setNotesPath', user.uid, {root: true})
-    dispatch('attachFirebaseListeners')
+    this.$state.user = user
+    // dispatch('sendAlert', alert, { root: true })
+    // dispatch('setNotesPath', user.uid, {root: true})
+    // dispatch('attachFirebaseListeners')
   } /*,
   signOut ({ commit, state, dispatch, rootState }) {
     rootState.auth().signOut()
@@ -58,9 +59,16 @@ const getters = {
   getUid: state => state.uid
 }
 
+const mutations = {
+  [types.SET_USER] (state, user) {
+    state.currentUser = user
+    state.auth = !!user
+  }
+}
+
 export default {
   state,
   getters,
-  actions /* ,
-  mutations */
+  actions,
+  mutations
 }
