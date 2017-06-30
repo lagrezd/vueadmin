@@ -8,11 +8,11 @@ import { store } from './store'
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.authRequired && !store.getters.getAuth) {
-    console.log(to.meta.Auth)
-    console.log(to.meta.Auth)
+  if (to.meta.Auth && (!store.getters.getAuth)) {
+    // console.log(to.meta.Auth)
     next({ path: '/login' })
   } else {
+    console.log(store.state.getAuth)
     next()
   }
 })
@@ -25,3 +25,14 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+
+// Check local storage to handle refreshes
+if (window.localStorage) {
+  var localUserString = window.localStorage.getItem('user') || 'null'
+  var localUser = JSON.parse(localUserString)
+
+  if (localUser && store.state.user !== localUser) {
+    store.commit('SET_USER', localUser)
+    // store.commit('SET_TOKEN', window.localStorage.getItem('token'))
+  }
+}

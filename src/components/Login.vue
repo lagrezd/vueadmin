@@ -50,19 +50,11 @@
     },
     methods: {
       signInWithPassword () {
+        this.authenticating = true
         if (this.email.length > 0 && this.password.length > 0) {
           this.$store.dispatch('signInWithPassword', this.credential)
         }
-      }, /*
-      login () {
-        this.authenticating = true
-        this.$store.dispatch('login', {
-          email: this.email,
-          password: this.password
-        }).then(() => {
-          this.$router.push('/')
-        })
-      }, */
+      },
       logout () {
         this.$store.dispatch('logout')
       }
@@ -76,7 +68,10 @@
     },
     computed: {
       credential () {
-        return {email: this.email, password: this.password}
+        return {
+          email: this.email,
+          password: this.password
+        }
       },
       authorized () {
         return this.$store.getters.getAuth

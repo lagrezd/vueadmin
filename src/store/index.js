@@ -26,7 +26,6 @@ export const store = new Vuex.Store({
     },
     [types.LOGIN_SUCCESS] (state) {
       state.isLoggedIn = true
-      state.user = localStorage.getItem('username')
       state.pending = false
     },
     [types.LOGOUT] (state) {
@@ -40,24 +39,20 @@ export const store = new Vuex.Store({
       return new Promise(resolve => {
         setTimeout(() => {
           localStorage.setItem('token', 'JWT')
-          localStorage.setItem('user', auth)
+          // localStorage.setItem('user', auth)
           commit(types.LOGIN_SUCCESS)
           resolve()
         }, 1000)
       })
     },
     logout ({ commit }) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('username')
+      localStorage.removeItem('user')
       commit(types.LOGOUT)
     }
   },
   getters: {
     isLoggedIn: state => {
       return state.isLoggedIn
-    },
-    userName: state => {
-      return state.userName
     }
   },
   modules: {

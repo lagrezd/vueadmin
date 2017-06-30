@@ -6,6 +6,12 @@ const state = {
   uid: ''
 }
 
+const getters = {
+  getUser: state => state.currentUser,
+  getAuth: state => state.auth,
+  getUid: state => state.uid
+}
+
 const actions = {
   /* signUpWithPassword ({ commit, state, dispatch, rootState }, credential) {
     rootState.auth().createUserWithEmailAndPassword(credential.email, credential.password)
@@ -19,44 +25,45 @@ const actions = {
       })
   }, */
   signInWithPassword ({ commit, state, dispatch, rootState }, credential) {
+    // console.log(rootState)
     rootState.auth().signInWithEmailAndPassword(credential.email, credential.password)
       .then((user) => {
         dispatch('signIn', user)
       })
       .catch((error) => {
-        console.log(error)
+        console.log('Erreur de connection à Firebase :' + error)
         // let alert = errorAlert(error, 'Impossible to sign in', 'error')
         // dispatch('sendAlert', alert, { root: true })
       })
   },
   signIn ({ commit, state, dispatch, rootState }, user) {
+    // console.log('Commit avant:' + user)
     commit(types.SET_USER, user)
-    this.$state.user = user
+    // console.log('Commit apres:' + user)
+    state.auth = user
+    localStorage.setItem('user', JSON.stringify(user))
+    // window.localStorage.setItem('token', token)
+    // this.state.user = user
     // dispatch('sendAlert', alert, { root: true })
     // dispatch('setNotesPath', user.uid, {root: true})
     // dispatch('attachFirebaseListeners')
-  } /*,
+  },
   signOut ({ commit, state, dispatch, rootState }) {
     rootState.auth().signOut()
       .then(() => {
         commit(types.SET_USER, null)
+        localStorage.removeItem('user')
         // let alert = successAlert('Signed out successfully', 'success')
-        dispatch('sendAlert', alert, { root: true })
+        /* dispatch('sendAlert', alert, { root: true })
         dispatch('detachFirebaseListeners')
-        dispatch('cleanUp')
+        dispatch('cleanUp') */
       })
       .catch((error) => {
         console.log(error)
         // let alert = successAlert('Signed out successfully', 'success')
-        dispatch('sendAlert', alert, { root: true })
+        // dispatch('sendAlert', alert, { root: true })
       })
-  } */
-}
-
-const getters = {
-  getUser: state => state.currentUser,
-  getAuth: state => state.auth,
-  getUid: state => state.uid
+  }
 }
 
 const mutations = {
