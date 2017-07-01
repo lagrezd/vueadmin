@@ -8,11 +8,11 @@ import { store } from './store'
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.Auth && (!store.getters.getAuth)) {
-    // console.log(to.meta.Auth)
+  if (to.meta.Auth && !store.getters.getAuth) {
+    // console.log('non auth ' + to.meta.Auth)
     next({ path: '/login' })
   } else {
-    console.log(store.state.getAuth)
+    // console.log('auth ' + store.state.getAuth)
     next()
   }
 })

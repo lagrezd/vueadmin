@@ -14,6 +14,11 @@ export default new Router({
   mode: 'history',
   routes: [
     {
+      path: '/login',
+      meta: { Auth: false },
+      component: Login
+    },
+    {
       path: '/',
       meta: { Auth: true },
       component: Dashboard,
@@ -31,11 +36,6 @@ export default new Router({
           component: UserView
         }
       ]
-    },
-    {
-      path: '/login',
-      meta: { Auth: false },
-      component: Login
     },
     {
       path: '*',
