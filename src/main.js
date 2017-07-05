@@ -1,21 +1,17 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import App from './App'
 import router from './router'
-import { store } from './store'
 
+import { sync } from 'vuex-router-sync'
+import App from './App'
+import { store } from './store'
+import Materials from 'vue-materials'
+
+Vue.use(Materials)
 Vue.config.productionTip = false
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.Auth && (!store.getters.getAuth)) {
-    // console.log(to.meta.Auth)
-    next({ path: '/login' })
-  } else {
-    console.log(store.state.getAuth)
-    next()
-  }
-})
+sync(store, router)
 
 /* eslint-disable no-new */
 new Vue({
@@ -24,6 +20,24 @@ new Vue({
   store,
   template: '<App/>',
   components: { App }
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.Auth)) {
+    // console.log(record.meta.Auth)
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!to.meta.Auth) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next() // make sure to always call next()!
+    }
+  } else {
+    next() // make sure to always call next()!
+  }
 })
 
 // Check local storage to handle refreshes
@@ -36,3 +50,4 @@ if (window.localStorage) {
     // store.commit('SET_TOKEN', window.localStorage.getItem('token'))
   }
 }
+

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+// import { firebaseAction } from 'vuexfire'
 
 import Firebase from 'firebase'
 import { config } from './firebaseConfig'
@@ -13,14 +14,20 @@ Firebase.initializeApp(config)
 
 let db = Firebase.database()
 let auth = Firebase.auth
+// let users = db.ref('clients')
+// console.log(users)
 
 export const store = new Vuex.Store({
+  // strict: true,
   state: {
     db,
     auth,
-    isLoggedIn: localStorage.getItem('token')
+    isLoggedIn: localStorage.getItem('token'),
+    users: [],
+    projects: []
   },
   mutations: {
+    // ...firebaseMutations,
     [types.LOGIN] (state) {
       state.pending = true
     },
@@ -33,6 +40,9 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    /* setClientsRef: firebaseAction(({ bindFirebaseRef }, users) => {
+      bindFirebaseRef('users', users)
+    }), */
     login ({ commit }, creds) {
       console.log('login...', creds)
       commit(types.LOGIN) // show spinner

@@ -8,19 +8,19 @@
                     <span> Dashboard</span>
                 </a>
             </router-link>
-            <li class="no-padding">
-                <ul class="collapsible" data-collapsible="accordion" v-for="client in clients">
-                    <router-link to="/" exact tag="li" active-class="active" class="no-padding">
-                        <a class="collapsible-header waves-effect waves-cyan">
+            <li class="no-padding" v-for="client in clients">
+                <ul class="collapsible" data-collapsible="accordion">
+                    <router-link to="/" exact tag="li" class="no-padding" active-class="active">
+                        <a class="collapsible-header waves-effect waves-cyan" active-class="active">
                             <i class="material-icons">menu</i>
                             <span>{{ client.nom }}</span>
                         </a>
                         <div class="collapsible-body">
                             <ul>
-                                <router-link to="/1" tag="li">
+                                <router-link to="/project/1" tag="li" active-class="active">
                                     <a>Client 1</a>
                                 </router-link>
-                                <router-link to="/2/calltracking" tag="li">
+                                <router-link to="/project/2/calltracking" tag="li" active-class="active">
                                     <a>Client 2</a>
                                 </router-link>
                             </ul>

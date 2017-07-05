@@ -7,8 +7,9 @@
                 <div class="nav-wrapper">
                     <router-link to="/"><a id="logo-container" class="brand-logo">Vue Admin</a></router-link>
                     <ul class="right hide-on-med-and-down">
-                        <router-link to="/users" v-if="authorized" tag="li"><a><i class="material-icons">supervisor_account</i></a></router-link>
-                        <router-link to="/user" v-if="authorized" tag="li"><a>{{ getUser.displayName || getUser.email }}</a></router-link>
+                        <router-link to="/settings" v-if="authorized" tag="li" active-class="active"><a><i class="material-icons">settings</i></a></router-link>
+                        <router-link to="/users" v-if="authorized" tag="li" active-class="active"><a><i class="material-icons">supervisor_account</i></a></router-link>
+                        <router-link to="/user/1" v-if="authorized" tag="li" active-class="active"><a>{{ getUser.displayName || getUser.email }}</a></router-link>
                         <li class="search-out hiddendiv">
                             <input type="text" class="search-out-text">
                         </li>

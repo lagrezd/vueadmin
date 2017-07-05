@@ -11,7 +11,7 @@
                     <div class="col s12 m6 l3">
                         <div class="card">
                             <div class="card-content  green white-text">
-                                <p class="card-stats-title"><i class="material-icons">group_add</i> New Clients</p>
+                                <p class="card-stats-title"><i class="material-icons">group_add</i> Total Prices</p>
                                 <h4 class="card-stats-number">566</h4>
                                 <p class="card-stats-compare"><i class="material-icons">keyboard_arrow_up</i> 15% <span class="green-text text-lighten-5">from yesterday</span>
                                 </p>
@@ -64,6 +64,38 @@
                 </div>
             </div>
             <!--card stats end-->
+
+            <div class="section">
+
+                <p class="caption">Bonjour <strong>{{ getUser.email }}</strong></p>
+                <p>Message d'introduction</p>
+                <div class="divider"></div>
+
+                <!--Responsive Table-->
+                <div class="divider"></div>
+                <div id="responsive-table">
+                    <h4 class="header">Liste des utilisateurs</h4>
+                    <div class="row">
+                        <div class="col s12">
+                            <table class="responsive-table">
+                                <thead>
+                                <tr>
+                                    <th data-field="id">Id</th>
+                                    <th data-field="name">Name</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(todo, index) in todos">
+                                        <td>{{ index+1 }}</td>
+                                        <td>{{ todo.text }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
             <!-- //////////////////////////////////////////////////////////////////////////// -->
 
@@ -338,6 +370,43 @@
     </section>
     <!-- END CONTENT -->
 </template>
+
+<script>
+    // import { firebaseAction } from 'vuexfire'
+
+    /* const setTodosRef = firebaseAction(({ bindFirebaseRef, unbindFirebaseRef }, { ref }) => {
+      // this will unbind any previously bound ref to 'todos'
+      bindFirebaseRef('todos', ref)
+      // you can unbind it easily too
+      unbindFirebaseRef('todos')
+    }) */
+
+    export default {
+      data () {
+        return {
+          todos: [
+            {
+              text: 'VueJS'
+            },
+            {
+              text: 'Vuex'
+            }
+          ]
+        }
+      },
+      computed: {
+        getUser () {
+          return this.$store.getters.getUser
+        } /* ,
+        getTodos () {
+          return Vuex.mapState(['todos'])
+        } */
+      } /* ,
+      created () {
+        this.$store.dispatch('setTodosRef')
+      } */
+    }
+</script>
 
 <style scoped>
     #chart-dashboard .card .card-content, #card-stats .card .card-content, #card-stats .card .card-action {

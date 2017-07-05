@@ -31,7 +31,16 @@ const actions = {
         dispatch('signIn', user)
       })
       .catch((error) => {
-        console.log('Erreur de connection à Firebase :' + error)
+        var errorCode = error.code
+        var errorMessage = error.message
+        if (errorCode === 'auth/wrong-password') {
+          alert('Wrong password.')
+        } else if (errorCode === 'auth/user-not-found') {
+          alert('Wrong username.')
+        } else {
+          alert(errorMessage + '' + errorCode)
+        }
+        console.log('Erreur de connection à Firebase :' + error.message)
         // let alert = errorAlert(error, 'Impossible to sign in', 'error')
         // dispatch('sendAlert', alert, { root: true })
       })

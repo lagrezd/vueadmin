@@ -57,7 +57,10 @@
       HeaderView,
       SidebarView,
       FooterView
-    }
+    } /* ,
+    created () {
+      this.$store.dispatch('setClientsRef')
+    } */
   }
 </script>
 

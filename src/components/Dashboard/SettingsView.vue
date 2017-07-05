@@ -19,11 +19,11 @@
                         <div class="row">
                             <div class="input-field col s6">
                                 <div class="col s1"><i class="material-icons prefix">today</i></div>
-                                <div class="col s11"><datepicker :readonly="true" format="D/MMM/YYYY" id="dateInput" width="100%" class="materialize-textarea"></datepicker></div>
+                                <div class="col s11"><datepicker :readonly="true" format="MMM/D/YYYY" id="dateInput" width="100%" class="materialize-textarea"></datepicker></div>
                             </div>
                             <div class="input-field col s6">
-                                <input id="last_name" type="text" class="validate" v-model="getUser.email">
-                                <!-- label for="last_name" :class="getUser.email ? '' : 'active'">Last Name</label -->
+                                <input id="last_name" type="text" class="validate">
+                                <label for="last_name">Last Name</label>
                             </div>
                         </div>
                     </form>
@@ -34,24 +34,31 @@
 </template>
 
 <script>
+    import datepicker from 'vue-date-picker'
     export default {
+      data () {
+        return {
+        }
+      },
+      components: {
+        datepicker
+      },
       computed: {
-        userName () {
-          return this.$store.getters.userName
-        },
-        authorized () {
-          return this.$store.getters.getAuth
-        },
-        getUser () {
-          return this.$store.getters.getUser
+        datetime () {
+          return new Date()
+        }
+      },
+      methods: {
+        clearInput (vueModel) {
+          vueModel = ''
         }
       }
     }
 </script>
 
-<style scoped>
-    .nav-wrapper a:first-child {
+<style>
+    /* .nav-wrapper a:first-child {
         margin-left: 20px;
-    }
+    } */
     nav { background-color: inherit }
 </style>

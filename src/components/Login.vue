@@ -43,8 +43,8 @@
   export default {
     data () {
       return {
-        email: 'damien@atypicom.fr',
-        password: 'sed64c33',
+        email: 'test@test.com',
+        password: 'testadmin',
         authenticating: false
       }
     },
